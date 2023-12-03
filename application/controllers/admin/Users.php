@@ -14,7 +14,7 @@ class Users extends CI_Controller {
 	{
 		$data['title'] = 'Admin';
 		$data['user'] = $this->Auth_m->get_where('users', ['username' => $this->session->userdata('username')])->row_array();
-		$data['users'] = $this->User_m->count('users')->result_array();
+		$data['users'] = $this->User_m->get('users')->result_array();
 		$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim');
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[4]|max_length[12]');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|max_length[12]');
@@ -54,7 +54,6 @@ class Users extends CI_Controller {
 		} else {
 			$this->ubahDataUser();
 		}
-
 	}
 
 	public function ubahDataUser()

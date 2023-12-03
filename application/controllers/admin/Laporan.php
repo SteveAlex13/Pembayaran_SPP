@@ -43,6 +43,21 @@ class Laporan extends CI_Controller {
 		$this->load->view('layout/footer');
 	}
 
+	public function lpTunggakan()
+	{
+		$mulaiTgl = $this->input->post('mulai_tgl');
+		$sampaiTgl = $this->input->post('sampai_tgl');
+		$data = [
+			'mulaiTgl' => $mulaiTgl,
+			'sampaiTgl' => $sampaiTgl
+		];
+		$data['title'] = 'Laporan Tunggakan';
+		$data['tunggakan'] = $this->Transaksi_m->getDataLaporanByDate($mulaiTgl, $sampaiTgl)->result_array();
+		$this->load->view('layout/header', $data);
+		$this->load->view('admin/laporan/laporan_tunggakan', $data);
+		$this->load->view('layout/footer');
+	}
+
 	public function pembayaranExcel($mulaiTgl, $sampaiTgl)
 	{
 		$data = [

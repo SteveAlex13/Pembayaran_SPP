@@ -39,6 +39,17 @@ class Transaksi_m extends CI_Model {
 		return $this->db->query($query);
 	}
 
+	public function getDataLaporanByDate($mulaiTgl, $sampaiTgl)
+	{
+		$query = "SELECT spp.*, siswa.nis, siswa.nama_siswa, siswa.kelas 
+          FROM spp 
+          INNER JOIN siswa ON siswa.id_siswa = spp.id_siswa 
+          WHERE ket = '' 
+          AND jatuh_tempo BETWEEN '$mulaiTgl' AND '$sampaiTgl' 
+          ORDER BY tgl_bayar ASC";
+		return $this->db->query($query);
+	}
+
 	public function get_join_where($table, $where)
 	{
 		// $query = "SELECT spp.*, siswa.nis, siswa.nama_siswa, siswa.kelas FROM spp INNER JOIN siswa ON siswa.id_siswa = spp.id_siswa WHERE id_spp = '$' ORDER BY tgl_bayar ASC";
@@ -46,6 +57,8 @@ class Transaksi_m extends CI_Model {
 		$this->db->join('siswa', 'siswa.id_siswa = spp.id_siswa');
 		return $this->db->get_where($table, $where);
 	}
+
+
 
 	public function count() {
 		$query = $this->db->query("SELECT sum(jml) AS count_jml FROM spp WHERE ket = 'Lunas'");
